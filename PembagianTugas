@@ -1,0 +1,90 @@
+Ricky :
+1. Project Manager / Game Designer
+Tugas Teknis:
+Buat alur logika game:
+Dino melompat saat suara terdeteksi.
+Game berakhir saat Dino menabrak rintangan.
+
+Rancang tingkat kesulitan:
+Tambahkan kecepatan obstacle setiap skor tertentu.
+Level 1 (score 0), Level 2 (score 300), Level 3 (score 1000).
+
+Dokumentasi:
+Buat README.md berisi:
+Cara menjalankan game.
+Modul yang digunakan: pygame, sounddevice, numpy.
+Cara kontribusi tiap anggota.
+
+Javier :
+2. Gameplay Programmer
+Tugas Teknis:
+Buat loop game di main.py:
+while True:
+    # update posisi obstacle
+    obstacle_x -= speed
+    # deteksi tabrakan
+    if obstacle_x < dino_x + dino_width and dino_y + dino_height > obstacle_y:
+        game_over = True
+
+Implementasi lompatan:
+if jumping:
+    dino_y -= jump_velocity
+    jump_velocity -= gravity
+    if dino_y >= ground_y:
+        dino_y = ground_y
+        jumping = False
+Atur FPS, clock, dan update tampilan.
+
+Jericho:
+3. Tester & Debugger
+Tugas Teknis:
+Buat skrip test/test_sound.py untuk uji volume:
+
+from sound_module import is_sound_triggered
+print("Coba berteriak...")
+if is_sound_triggered():
+    print("Terdeteksi suara!")
+else:
+    print("Tidak ada suara.")
+Cek bug seperti:
+
+Dino tidak lompat meski ada suara.
+Deteksi tabrakan tidak akurat.
+Game lag saat banyak obstacle.
+Catat bug dalam test/bugs.txt.
+
+Andrew:
+4. Sound Programmer
+Tugas Teknis:
+Gunakan sounddevice untuk mendeteksi suara:
+
+import sounddevice as sd
+import numpy as np
+
+def is_sound_triggered(threshold=0.08):
+    duration = 0.2
+    audio = sd.rec(int(duration * 44100), samplerate=44100, channels=1)
+    sd.wait()
+    volume = np.linalg.norm(audio) / len(audio)
+    return volume > threshold
+
+Integrasi dengan game:
+if is_sound_triggered():
+    if not jumping:
+        jumping = True
+        jump_velocity = 20
+
+Jethro:
+5. UI/UX & Graphic Designer
+Tugas Teknis:
+Desain grafis:
+
+Dino: assets/dino.png
+Rintangan: assets/obstacle.png
+Background: bisa warna solid atau gambar.
+
+Tampilkan skor dan level di layar:
+font = pygame.font.SysFont(None, 36)
+score_text = font.render(f'Score: {score}', True, (255, 255, 255))
+screen.blit(score_text, (10, 10))
+Simpan file di folder assets/.
